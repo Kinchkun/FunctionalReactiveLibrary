@@ -42,8 +42,15 @@ class ValueStream<ValueType> {
 var independenVar1 = new ValueStream(lift(1));
 var independenVar2 = new ValueStream(lift(1));
 
-var dependendVar = combine(independenVar1, independenVar2, (x,y) => x + y);
+var simpleDependenVar = independenVar1.map(x => x + 1);
+console.log(simpleDependenVar.value) // => 2
+independenVar1.value = 2;
+console.log(simpleDependenVar.value) // => 3
 
+// ====================================================
+// combinations
+
+var dependendVar = combine(independenVar1, independenVar2, (x,y) => x + y);
 
 console.log(dependendVar.value);
 independenVar1.value = 5;
