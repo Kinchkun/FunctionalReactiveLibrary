@@ -23,6 +23,11 @@ function combine<VT1, VT2, RT>(vs1: ValueStream<VT1>, vs2: ValueStream<VT2>, acc
 // class UnidirectionalValueStream
 // class BidirectionalValueStream
 
+interface Bijection<DomainType, CoDomainType> {
+  mapFn: (v: DomainType) => CoDomainType;
+  inverseFn: (v: CoDomainType) => DomainType;
+}
+
 class ValueStream<ValueType> {
 
   constructor(private cell: Cell<ValueType>) { }
@@ -32,6 +37,9 @@ class ValueStream<ValueType> {
 
   public map = <MappedValueType>(mapFn: (value: ValueType) => MappedValueType): ValueStream<MappedValueType> => {
     return new ValueStream(lift(mapFn(this.value)));
+  }
+  public bimap = <MappedValueType>(bijection: Bijection<ValueType, MappedValueType>): ValueStream<MappedValueType> => {
+    return null;
   }
 }
 
